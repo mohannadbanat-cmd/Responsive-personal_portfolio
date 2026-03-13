@@ -156,12 +156,35 @@ const formMsg = document.getElementById('form-msg');
 if (form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Show success message (replace with actual form handler)
-        formMsg.textContent = 'Message sent successfully!';
-        formMsg.style.color = '#61b752';
-        form.reset();
-        setTimeout(() => {
-            formMsg.textContent = '';
-        }, 5000);
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('.btn-submit');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+        })
+        .then(response => {
+            if (response.ok) {
+                formMsg.textContent = 'Message sent successfully!';
+                formMsg.style.color = '#61b752';
+                form.reset();
+            } else {
+                formMsg.textContent = 'Something went wrong. Please try again.';
+                formMsg.style.color = '#e74c3c';
+            }
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bx bx-send"></i> Send Message';
+            setTimeout(() => { formMsg.textContent = ''; }, 5000);
+        })
+        .catch(() => {
+            formMsg.textContent = 'Network error. Please try again.';
+            formMsg.style.color = '#e74c3c';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bx bx-send"></i> Send Message';
+            setTimeout(() => { formMsg.textContent = ''; }, 5000);
+        });
     });
 }
