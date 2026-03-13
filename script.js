@@ -1,53 +1,167 @@
-let menuIcon=document.querySelector('#menu-icon');
-let navbar=document.querySelector('.navbar');
+/* ============================================
+   MOHANNAD BANAT — WEBSITE SCRIPTS
+   ============================================ */
 
-menuIcon.onclick=()=>{
+// ===== DOM ELEMENTS =====
+const menuIcon = document.querySelector('#menu-icon');
+const navbar = document.querySelector('#navbar');
+const header = document.querySelector('#header');
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('#navbar a');
+
+// ===== MOBILE MENU TOGGLE =====
+menuIcon.addEventListener('click', () => {
     menuIcon.classList.toggle('bx-x');
     navbar.classList.toggle('active');
-};
+});
 
+// ===== SCROLL EVENTS =====
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
 
-let sections=document.querySelectorAll('section');
-let navLinks=document.querySelectorAll('header nav a');
+    // Header background on scroll
+    header.classList.toggle('scrolled', scrollY > 80);
 
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
+    // Active nav link on scroll
+    sections.forEach(section => {
+        const top = section.offsetTop - 200;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
 
-        if(top >= offset && top < offset + height){
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
+        if (scrollY >= top && scrollY < top + height) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + id) {
+                    link.classList.add('active');
+                }
             });
-        };
-
+        }
     });
-    let header=document.querySelector('header');
 
-    header.classList.toggle('sticky',window.screenY>100);
+    // Close mobile menu on scroll
     menuIcon.classList.remove('bx-x');
     navbar.classList.remove('active');
-};
+});
 
+// ===== CLOSE MENU ON LINK CLICK =====
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuIcon.classList.remove('bx-x');
+        navbar.classList.remove('active');
+    });
+});
+
+// ===== TYPED.JS =====
+const typed = new Typed('.typed-text', {
+    strings: [
+        'Entrepreneur',
+        'Business Developer',
+        'Strategic Thinker',
+        'Academic Consultant',
+        'Visionary Leader'
+    ],
+    typeSpeed: 60,
+    backSpeed: 40,
+    backDelay: 2000,
+    loop: true,
+    showCursor: false
+});
+
+// ===== SCROLL REVEAL =====
 ScrollReveal({
-    //reset:true,
-    distance:'80px',
-    duration:2000,
-    delay:200
+    distance: '60px',
+    duration: 1500,
+    delay: 200,
+    reset: false
 });
 
-ScrollReveal().reveal('.home-content,.heading',{origin:'top'});
-ScrollReveal().reveal('.home-img,.services-container,.portfolio-box,.contact form',{origin:'bottom'});
-ScrollReveal().reveal('.home-content h1,.about-img',{origin:'left'});
-ScrollReveal().reveal('.home-content p,.about-content',{origin:'right'});
+// Hero
+ScrollReveal().reveal('.hero-greeting, .hero-name', { origin: 'left' });
+ScrollReveal().reveal('.hero-title, .hero-description', { origin: 'left', delay: 300 });
+ScrollReveal().reveal('.hero-cta, .hero-socials', { origin: 'bottom', delay: 500 });
+ScrollReveal().reveal('.hero-image', { origin: 'right', delay: 400 });
 
-const typed = new Typed('.multiple-text',{
-    strings:['CSE Student at NMIT ','Frontend developer'],
-    typeSpeed:100,
-    backSpeed:100,
-    backDelay:1000,
-    loop:true
-});
+// About
+ScrollReveal().reveal('.section-header', { origin: 'top' });
+ScrollReveal().reveal('.about-image', { origin: 'left' });
+ScrollReveal().reveal('.about-content', { origin: 'right' });
+ScrollReveal().reveal('.stat-item', { origin: 'bottom', interval: 150 });
+
+// Expertise
+ScrollReveal().reveal('.expertise-card', { origin: 'bottom', interval: 150 });
+
+// Ventures
+ScrollReveal().reveal('.timeline-item', { origin: 'left', interval: 200 });
+ScrollReveal().reveal('.education-card', { origin: 'bottom', interval: 150 });
+
+// Contact
+ScrollReveal().reveal('.contact-info-card', { origin: 'left', interval: 150 });
+ScrollReveal().reveal('.contact-form', { origin: 'right' });
+
+// ===== FLOATING PARTICLES (HERO) =====
+function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+
+    const particleCount = 30;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 4 + 1}px;
+            height: ${Math.random() * 4 + 1}px;
+            background: rgba(201, 169, 110, ${Math.random() * 0.4 + 0.1});
+            border-radius: 50%;
+            top: ${Math.random() * 100}%;
+            left: ${Math.random() * 100}%;
+            animation: float-particle ${Math.random() * 10 + 8}s ease-in-out infinite;
+            animation-delay: ${Math.random() * 5}s;
+            pointer-events: none;
+        `;
+        container.appendChild(particle);
+    }
+
+    // Add CSS animation via style tag
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes float-particle {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(${Math.random() * 60 - 30}px, ${Math.random() * 60 - 30}px) scale(1.2);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(${Math.random() * 80 - 40}px, ${Math.random() * 80 - 40}px) scale(0.8);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translate(${Math.random() * 60 - 30}px, ${Math.random() * 60 - 30}px) scale(1.1);
+                opacity: 0.7;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+createParticles();
+
+// ===== CONTACT FORM =====
+const form = document.getElementById('contact-form');
+const formMsg = document.getElementById('form-msg');
+
+if (form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Show success message (replace with actual form handler)
+        formMsg.textContent = 'Message sent successfully!';
+        formMsg.style.color = '#61b752';
+        form.reset();
+        setTimeout(() => {
+            formMsg.textContent = '';
+        }, 5000);
+    });
+}

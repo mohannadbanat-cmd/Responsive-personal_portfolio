@@ -1,25 +1,34 @@
-# Responsive-personal_portfolio
-This repository contains the code for my personal portfolio website built using HTML, CSS, and JavaScript. The portfolio showcases my skills, projects, and accomplishments, providing a glimpse into my professional journey.
+# Mohannad Banat — Personal Portfolio
 
-# Live Demo
-https://shreya6360.github.io/Responsive-personal_portfolio/ 
+Personal branding website for Mohannad Banat — Entrepreneur, Business Development Consultant, and Academic Sector Specialist.
 
+## Live Preview
 
-# Prerequisites
-Before you begin, ensure you have met the following requirements: 
- 
-Git must be installed on your operating system.
+Open `index.html` in your browser to view the website.
 
-# Run Locally
-To run this project locally, run this command on your git bash:
+## Tech Stack
 
-Linux and macOS:
+- HTML5 / CSS3 / JavaScript
+- [Typed.js](https://github.com/mattboldt/typed.js/) — animated text
+- [ScrollReveal](https://scrollrevealjs.org/) — scroll animations
+- [Boxicons](https://boxicons.com/) — iconography
+- Google Fonts (Inter + Playfair Display)
 
-sudo git clone https://github.com/shreya6360/Responsive-personal_portfolio.git 
+## Structure
 
-Windows:
+```
+├── index.html          # Main page
+├── style.css           # Styling
+├── script.js           # Interactions
+├── assets/
+│   ├── hero-bg.png     # Hero background
+│   ├── profile.png     # Profile image
+│   └── Mohannad_Banat_CV_2026.pdf
+└── README.md
+```
 
-git clone https://github.com/shreya6360/Responsive-personal_portfolio.git 
+## Contact
 
-# License
-This project is free to use and does not contains any license.
+- Email: mohannadbanat@gmail.com
+- Phone: +962 79 552 1661
+- Location: Amman, Jordan
