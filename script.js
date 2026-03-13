@@ -156,15 +156,23 @@ const formMsg = document.getElementById('form-msg');
 if (form) {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
         const submitBtn = form.querySelector('.btn-submit');
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
 
+        // Build form data explicitly
+        const body = new URLSearchParams({
+            'form-name': 'contact-form',
+            'Name': form.querySelector('[name="Name"]').value,
+            'Email': form.querySelector('[name="Email"]').value,
+            'Subject': form.querySelector('[name="Subject"]').value,
+            'Message': form.querySelector('[name="Message"]').value
+        }).toString();
+
         fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString()
+            body: body
         })
         .then(response => {
             if (response.ok) {
